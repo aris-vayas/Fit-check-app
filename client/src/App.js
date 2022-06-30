@@ -1,18 +1,27 @@
 import { useState, useEffect } from "react";
+import NavBar from "./NavBar";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { Route, Routes, Navigate } from "react-router-dom";
+import Landing from "./Landing";
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#7190AD",
+    },
+    secondary: {
+      main: "#AD8E71",
+    },
+  },
+});
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    fetch("/hello")
-      .then((r) => r.json())
-      .then((data) => setCount(data.count));
-  }, []);
-
   return (
-    <div className="App">
-      <h1>Page Count!: {count}</h1>
-    </div>
+    <ThemeProvider theme={theme}>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Landing />}></Route>
+      </Routes>
+    </ThemeProvider>
   );
 }
 
