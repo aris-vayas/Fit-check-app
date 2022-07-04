@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { cloneElement, useState } from "react";
 import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -28,12 +28,34 @@ const NewUserForm = ({ handleClose }) => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-    console.log(firstName, lastName, email, password);
-    handleClose();
-  };
+
+    const user = {
+      username: email,
+      email,
+      password: password,
+      full_name: `${firstName} ${lastName}`,
+    };
+    console.log(user);
+    fetch(`/users`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((user) => {
+          console.log(user);
+        });
+      } else {
+        res.json().then((json) => console.log(json.errors));
+      }
+    });
+    setEmail("");
+    setLastName("");
+    setFirstName("");
+    setPassword("");
+  }
 
   return (
     <form className={classes.root} onSubmit={handleSubmit}>

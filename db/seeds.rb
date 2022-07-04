@@ -6,7 +6,7 @@ Voter.destroy_all
 
 puts "seeding users..."
 
-User.create(full_name: 'Aris Vayas', email: 'aris.vayas@gmail.com', password_digest: 'secret', username: 'arisonford')
+User.create(full_name: 'Aris Vayas', email: 'aris.vayas@gmail.com', password: 'secret', username: 'aris')
 
 puts "seeing photos"
 

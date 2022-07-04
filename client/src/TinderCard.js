@@ -3,7 +3,11 @@ import FitCard from "./FitCard";
 // ...
 function Card(options) {
   const onSwipe = (direction) => {
-    console.log("You swiped: " + direction);
+    if (direction === "left") {
+      console.log("You swiped: no like ");
+    } else if (direction === "right") {
+      console.log("You swiped: like ");
+    }
   };
 
   const onCardLeftScreen = (myIdentifier) => {
