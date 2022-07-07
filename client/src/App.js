@@ -11,6 +11,7 @@ import UserProfile from "./UserProfile";
 import Grid from "@mui/material/Grid";
 import { Paper } from "@mui/material";
 import Logout from "./Logout";
+import Login from "./Login";
 
 const image =
   " https://images.creativemarket.com/0.1.0/ps/1046651/2000/2000/m1/fpnw/wm0/80s-inspired-patterns-2.0-02-.jpg?1456936583&s=d8e1ae51ac718b8fd73306485d9a1170";
@@ -20,33 +21,26 @@ const theme = createTheme({
       main: "#7190AD",
     },
     secondary: {
-      main: "#AD8E71",
+      main: "#ffffff",
     },
     background: {
-      default: "7190AD",
+      default: "#ffffff",
       paper: "#7190AD",
     },
     typography: {
       allVariants: {
-        fontFamily: "Splash",
+        fontFamily: "monospace",
         fontSize: 12,
       },
     },
   },
 });
-const sectionStyle = {
-  height: "100vh",
-
-  backgroundImage: `url(${image}) `,
-
-  backgroundRepeat: "no-repeat",
-  backgroundSize: "cover",
-  opacity: "0.2",
-};
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [curUser, setCurUser] = useState(null);
+  const [images, setImages] = useState([]);
+
   useEffect(() => {
     fetch("/authorized_user").then((res) => {
       if (res.ok) {
@@ -57,7 +51,13 @@ function App() {
       }
     });
   }, []);
-  console.log(isAuthenticated);
+
+  useEffect(() => {
+    fetch("/photos")
+      .then((r) => r.json())
+      .then((data) => setImages(data));
+  }, []);
+
   if (!isAuthenticated)
     return (
       <ThemeProvider theme={theme}>
@@ -75,11 +75,31 @@ function App() {
                 curUser={curUser}
                 setCurUser={setCurUser}
                 image={image}
+                isAuthenticated={isAuthenticated}
+                images={images}
               />
             }
           ></Route>
+          <Route
+            path="/login"
+            element={
+              <Login
+                setCurUser={setCurUser}
+                setIsAuthenticated={setIsAuthenticated}
+              />
+            }
+          />
           <Route path="/about" element={<About image={image} />}></Route>
           <Route path="/NewUserForm" element={<NewUserForm />}></Route>
+          <Route
+            path="/Profile"
+            element={
+              <NewUserForm
+                setIsAuthenticated={setIsAuthenticated}
+                setIsAuthenticated={setIsAuthenticated}
+              />
+            }
+          ></Route>
           <Route path="/TopFits" element={<TopFits />}></Route>
           <Route
             path="/Logout"
@@ -107,16 +127,22 @@ function App() {
             path="/Landing"
             element={
               <Landing
+                images={images}
                 image={image}
                 setIsAuthenticated={setIsAuthenticated}
                 curUser={curUser}
                 setCurUser={setCurUser}
+                isAuthenticated={isAuthenticated}
               />
             }
           ></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path="/NewUserForm" element={<NewUserForm />}></Route>
-          <Route path="/Profile" element={<UserProfile />}></Route>
+          <Route
+            path="/Profile"
+            element={<UserProfile images={images} />}
+          ></Route>
+          <Route path="/TopFits" element={<TopFits />}></Route>
           <Route
             path="/Logout"
             element={

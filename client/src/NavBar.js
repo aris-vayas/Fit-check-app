@@ -77,9 +77,25 @@ export default function NavBar({ isAuthenticated }) {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>FitCheck</MenuItem>
-                <MenuItem onClick={handleClose}>TopFits</MenuItem>
-                <MenuItem onClick={handleClose}>About</MenuItem>
+                <MenuItem component={Link} to="/landing" onClick={handleClose}>
+                  FitCheck
+                </MenuItem>
+                <MenuItem component={Link} to="/topfits" onClick={handleClose}>
+                  TopFits
+                </MenuItem>
+                <MenuItem component={Link} to="/about" onClick={handleClose}>
+                  About
+                </MenuItem>
+                <MenuItem
+                  component={Link}
+                  to="/NewUserForm"
+                  onClick={handleClose}
+                >
+                  SignUp
+                </MenuItem>
+                <MenuItem component={Link} to="/signup" onClick={handleClose}>
+                  SignIn
+                </MenuItem>
               </Menu>
             </div>
           )}

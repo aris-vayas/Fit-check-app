@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { FormGroup } from "@mui/material";
 import { Card, Grid } from "@mui/material";
+import NewUserForm from "./NewUserForm";
 
 const useStyles = makeStyles((theme) => ({
   root: {

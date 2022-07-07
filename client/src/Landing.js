@@ -1,27 +1,60 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import TinderCard from "./TinderCard";
-import FitCard from "./FitCard";
-import NewUserForm from "./NewUserForm";
+import Card from "./TinderCard";
 import Grid from "@mui/material/Grid";
-import { backdropClasses } from "@mui/material";
 import Login from "./Login";
-import Paper from "@mui/material/Paper";
-function Landing({ image, setIsAuthenticated, curUser, setCurUser }) {
+import { Button, Paper } from "@mui/material";
+
+function Landing({
+  image,
+  setIsAuthenticated,
+  curUser,
+  setCurUser,
+  isAuthenticated,
+  images,
+  setImages,
+}) {
   const [count, setCount] = useState(0);
 
-  // useEffect(() => {
-  //   fetch("/hello")
-  //     .then((r) => r.json())
-  //     .then((data) => setCount(data.count));
-  // }, []);
-  if (!isAuthenticated)
+  useEffect(() => {
+    fetch("/hello")
+      .then((r) => r.json())
+      .then((data) => setCount(data.count));
+  }, []);
+
+  console.log(count);
+
+  if (!isAuthenticated) {
     return (
-      //homepage we land on. should route to
-      // <div className="App">
-
-      // </div>
-
+      <div
+        style={{
+          minHeight: "120vh",
+          backgroundImage: `url(${image})`,
+        }}
+      >
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          position="relative"
+        >
+          {count < 10 ? (
+            <Card count={count} setCount={setCount} images={images} />
+          ) : (
+            <h2>Liking swiping, please sign in or setup an account</h2>
+          )}
+          <Grid item marginTop={70}>
+            {/* <Login
+              setCurUser={setCurUser}
+              setIsAuthenticated={setIsAuthenticated}
+            /> */}
+          </Grid>
+        </Grid>
+      </div>
+    );
+  } else {
+    return (
       <div
         style={{
           minHeight: "110vh",
@@ -31,24 +64,24 @@ function Landing({ image, setIsAuthenticated, curUser, setCurUser }) {
         <Grid
           container
           spacing={2}
-          direction="row"
+          direction="column"
           alignItems="center"
           justify="center"
           justifyContent="center"
+          position="relative"
         >
-          <Grid item>
-            <TinderCard style={{ padding: 100, minHeight: "200vh" }} />
-          </Grid>
-          <Grid item>
-            <Login
-              setIsAuthenticated={setIsAuthenticated}
-              setCurUser={setCurUser}
-              curUser={curUser}
-            />
+          <Grid
+            item
+            justifyContent="center"
+            alignItems="center"
+            justify="center"
+          >
+            <Card count={count} setCount={setCount} images={images} />
           </Grid>
         </Grid>
       </div>
     );
+  }
 }
 
 export default Landing;
