@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { cloneElement, useState } from "react";
 import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-
+import { Toolbar, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
+import Login from "./Login";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -21,61 +23,96 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NewUserForm = ({ handleClose }) => {
+const NewUserForm = ({ handleClose, setIsAuthenticated }) => {
   const classes = useStyles();
   // create state variables for each input
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleSubmit = (e) => {
+  function handleSubmit(e) {
     e.preventDefault();
-    console.log(firstName, lastName, email, password);
-    handleClose();
-  };
+
+    const user = {
+      username: email,
+      email,
+      password: password,
+      full_name: `${firstName} ${lastName}`,
+    };
+    console.log(user);
+    fetch(`/users`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((user) => {
+          console.log(user);
+        });
+      } else {
+        res.json().then((json) => console.log(json.errors));
+      }
+    });
+    setEmail("");
+    setLastName("");
+    setFirstName("");
+    setPassword("");
+  }
+  function handleForgotPassword() {
+    fetch(`/welcome_email`)
+      .then((r) => r.json())
+      .then((data) => console.log(data));
+  }
 
   return (
-    <form className={classes.root} onSubmit={handleSubmit}>
-      <TextField
-        label="First Name"
-        variant="filled"
-        required
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
-      />
-      <TextField
-        label="Last Name"
-        variant="filled"
-        required
-        value={lastName}
-        onChange={(e) => setLastName(e.target.value)}
-      />
-      <TextField
-        label="Email"
-        variant="filled"
-        type="email"
-        required
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <TextField
-        label="Password"
-        variant="filled"
-        type="password"
-        required
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <div>
-        <Button variant="contained" onClick={handleClose}>
-          Forgot Password
+    <>
+      <Toolbar justifyContent="center"></Toolbar>
+
+      <form className={classes.root} onSubmit={handleSubmit}>
+        <TextField
+          label="First Name"
+          variant="filled"
+          required
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
+        <TextField
+          label="Last Name"
+          variant="filled"
+          required
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+        />
+        <TextField
+          label="Email"
+          variant="filled"
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <TextField
+          label="Password"
+          variant="filled"
+          type="password"
+          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+
+        <Button
+          variant="contained"
+          onClick={console.log("click")}
+          component={Link}
+          to="/Login"
+        >
+          Already a user? Sign in now
         </Button>
         <Button type="submit" variant="contained" color="primary">
           Signup
         </Button>
-      </div>
-    </form>
+      </form>
+    </>
   );
 };
 

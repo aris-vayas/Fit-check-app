@@ -1,10 +1,19 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import TinderCard from "./TinderCard";
-import FitCard from "./FitCard";
-import NewUserForm from "./NewUserForm";
+import Card from "./TinderCard";
 import Grid from "@mui/material/Grid";
-function Landing() {
+import Login from "./Login";
+import { Button, Paper } from "@mui/material";
+
+function Landing({
+  image,
+  setIsAuthenticated,
+  curUser,
+  setCurUser,
+  isAuthenticated,
+  images,
+  setImages,
+}) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -12,22 +21,67 @@ function Landing() {
       .then((r) => r.json())
       .then((data) => setCount(data.count));
   }, []);
-  return (
-    <div className="App">
-      <Grid
-        container
-        spacing={0}
-        direction="column"
-        alignItems="center"
-        justify="center"
-        style={{ minHeight: "100vh" }}
+
+  console.log(count);
+
+  if (!isAuthenticated) {
+    return (
+      <div
+        style={{
+          minHeight: "120vh",
+          backgroundImage: `url(${image})`,
+        }}
       >
-        <TinderCard />
-        <NewUserForm />
-        <h1>Page Count!: {count} dollhairs</h1>
-      </Grid>
-    </div>
-  );
+        <Grid
+          container
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          position="relative"
+        >
+          {count < 10 ? (
+            <Card count={count} setCount={setCount} images={images} />
+          ) : (
+            <h2>Liking swiping, please sign in or setup an account</h2>
+          )}
+          <Grid item marginTop={70}>
+            {/* <Login
+              setCurUser={setCurUser}
+              setIsAuthenticated={setIsAuthenticated}
+            /> */}
+          </Grid>
+        </Grid>
+      </div>
+    );
+  } else {
+    return (
+      <div
+        style={{
+          minHeight: "110vh",
+          backgroundImage: `url(${image})`,
+        }}
+      >
+        <Grid
+          container
+          spacing={2}
+          direction="column"
+          alignItems="center"
+          justify="center"
+          justifyContent="center"
+          position="relative"
+        >
+          <Grid
+            item
+            justifyContent="center"
+            alignItems="center"
+            justify="center"
+          >
+            <Card count={count} setCount={setCount} images={images} />
+          </Grid>
+        </Grid>
+      </div>
+    );
+  }
 }
 
 export default Landing;
