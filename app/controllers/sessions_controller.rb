@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
         # If User exists / authenticates, render "user" as JSON with "status: :ok"
         if user&.authenticate(params[:password])
             session[:current_user] = user.id 
-            render json: user, status: :ok
+            render json: user, status: :ok, include: [:photos]
         else
             # If User does not authenticate, render "Invalid Password or Username" with "status: :unprocessable_entity"
             render json: { errors: "Invalid Password or Username" }, status: :unauthorized

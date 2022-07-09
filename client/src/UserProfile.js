@@ -35,7 +35,6 @@ export default function ClippedDrawer({ images }) {
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     color: theme.palette.text.secondary,
   }));
-  const heights = [150, 30, 90, 70, 90, 100, 150, 30, 50, 80];
   function handleClick() {
     console.log("click");
   }

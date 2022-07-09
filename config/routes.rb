@@ -12,7 +12,12 @@ Rails.application.routes.draw do
       constraints: ->(req) { !req.xhr? && req.format.html? }
 get '/authorized_user', to: 'users#show'
 get '/welcome_email', to: 'users#email'
+get '/best_fits', to: 'photos#best_fits'
+# post '/upvote', to: 'photos#upvote'
+# post '/downvote', to: 'photos#downvote'
+
+
       # Login / Logout Routes
-      post '/login', to: 'sessions#login'
+      post '/Login', to: 'sessions#login'
       delete '/logout', to: 'sessions#logout'
 end

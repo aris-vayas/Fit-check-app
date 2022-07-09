@@ -12,17 +12,15 @@ function Landing({
   setCurUser,
   isAuthenticated,
   images,
-  setImages,
+  setPhotos,
 }) {
   const [count, setCount] = useState(0);
-
+  console.log(curUser);
   useEffect(() => {
     fetch("/hello")
       .then((r) => r.json())
       .then((data) => setCount(data.count));
   }, []);
-
-  console.log(count);
 
   if (!isAuthenticated) {
     return (
@@ -42,14 +40,12 @@ function Landing({
           {count < 10 ? (
             <Card count={count} setCount={setCount} images={images} />
           ) : (
-            <h2>Liking swiping, please sign in or setup an account</h2>
-          )}
-          <Grid item marginTop={70}>
-            {/* <Login
+            <Login
               setCurUser={setCurUser}
               setIsAuthenticated={setIsAuthenticated}
-            /> */}
-          </Grid>
+            />
+          )}
+          <Grid item></Grid>
         </Grid>
       </div>
     );

@@ -4,15 +4,21 @@ class UsersController < ApplicationController
     end
 
     def show
-        user = User. User.find_by(id: session[:current_user])
+        user = User.find_by(id: session[:current_user])
+
+       
         render json: user
     end
-    def email
-        UserMailer.welcome_email.deliver_now
-    end
+
+
+    # def email
+    #     UserMailer.welcome_email(user).deliver_now
+    # end
+
+
     def create
             user = User.create!(user_params)
-
+            UserMailer.welcome_email(user).deliver_now
           
             render json: user , status: :created
     end

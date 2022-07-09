@@ -3,19 +3,36 @@ import TinderCard from "react-tinder-card";
 import "./TinderCards.css";
 
 import Button from "@mui/material/Button";
-
+import { PostAdd } from "@material-ui/icons";
+let scoreObj = {};
 function TinderCards({ count, setCount, images }) {
-  const swiped = (direction, nameToDelete) => {
-    console.log("removing: " + direction);
+  const [score, setScore] = useState(0);
+
+  const swiped = (direction, image) => {
+    if (direction === "left") {
+      console.log("left");
+      scoreObj = {
+        score: false,
+      };
+    } else {
+      console.log("right");
+      scoreObj = {
+        score: true,
+      };
+    }
+
+    console.log(image.id);
+    fetch(`/photos/${image.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(scoreObj),
+    }).then((data) => console.log(data));
 
     fetch("/count")
       .then((r) => r.json())
       .then((data) => setCount(data.count));
   };
-  const outOfFrame = (name) => {
-    console.log(name + "left the screen!");
-  };
-  console.log("intinder card", count);
+
   return (
     <>
       <div className="tindercards cardContent">
@@ -25,8 +42,7 @@ function TinderCards({ count, setCount, images }) {
               className="swipe"
               key={index}
               preventSwipe={["up", "down"]}
-              onSwipe={(dir) => swiped(dir)}
-              onCardLeftScreen={() => outOfFrame()}
+              onSwipe={(dir) => swiped(dir, image)}
             >
               <div
                 style={{ backgroundImage: `url(${image.image})` }}

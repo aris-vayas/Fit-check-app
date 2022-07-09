@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 import { FormGroup } from "@mui/material";
 import { Card, Grid } from "@mui/material";
 import NewUserForm from "./NewUserForm";
-
+import { useNavigate } from "react-router-dom";
+import { OutlinedFlagOutlined } from "@material-ui/icons";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -25,12 +26,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = ({ setIsAuthenticated, curUser, setCurUser }) => {
+const Login = ({
+  setIsAuthenticated,
+  photos,
+  setPhotos,
+  curUser,
+  setCurUser,
+}) => {
   const classes = useStyles();
   // create state variables for each input
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const nav = useNavigate();
 
   function onSubmit(e) {
     e.preventDefault();
@@ -39,7 +47,7 @@ const Login = ({ setIsAuthenticated, curUser, setCurUser }) => {
       password: password,
     };
 
-    fetch(`/login`, {
+    fetch(`/Login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
@@ -48,12 +56,14 @@ const Login = ({ setIsAuthenticated, curUser, setCurUser }) => {
         res.json().then((user) => {
           setCurUser(user);
           setIsAuthenticated(true);
+          setPhotos(user.photos);
         });
         setUsername("");
         setPassword("");
       } else {
         res.json().then((json) => console.log(json.errors));
       }
+      nav("/landing");
     });
   }
 

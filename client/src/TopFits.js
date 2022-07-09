@@ -1,25 +1,71 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Masonry from "@mui/lab/Masonry";
 import { styled } from "@mui/material/styles";
 import Grid from "@mui/material/Grid";
+import {
+  Typography,
+  Toolbar,
+  Button,
+  Switch,
+  FormGroup,
+  FormControlLabel,
+} from "@mui/material";
 
-export default function ImageMasonry() {
+export default function ImageMasonry({ images }) {
+  const [topFit, setTopFit] = useState([]);
+  useEffect(() => {
+    fetch("/best_fits")
+      .then((r) => r.json())
+      .then((data) => setTopFit(data));
+  }, []);
+  console.log("topfit", topFit);
   return (
-    <Box
-      sx={{
-        display: "flex",
-        justify: "center",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "flex",
-        minHeight: "flex",
-      }}
-    >
-      <Masonry
-        columns={3}
-        spacing={2}
+    <>
+      <Toolbar
+        sx={{
+          mr: 2,
+          display: { xs: "none", md: "flex" },
+          fontFamily: "monospace",
+          fontWeight: 700,
+          letterSpacing: ".3rem",
+          color: "inherit",
+          textDecoration: "none",
+          justifyContent: "center",
+        }}
+      >
+        <Typography
+          justifyContent="center"
+          variant="h2"
+          noWrap
+          sx={{
+            mr: 12,
+            display: { xs: "none", md: "flex" },
+            fontFamily: "monospace",
+            fontWeight: 700,
+            letterSpacing: ".3rem",
+            color: "inherit",
+            textDecoration: "none",
+          }}
+        >
+          TopFits
+        </Typography>
+        {/* <FormGroup>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={topFitState}
+                onChange={handleFilterFit}
+                aria-label="login switch"
+              />
+            }
+            label="togglefits"
+          />
+        </FormGroup> */}
+      </Toolbar>
+      <Box
         sx={{
           display: "flex",
           justify: "center",
@@ -29,24 +75,37 @@ export default function ImageMasonry() {
           minHeight: "flex",
         }}
       >
-        {itemData.map((item, index) => (
-          <div key={index}>
-            <img
-              src={`${item.img}?w=162&auto=format`}
-              srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
-              alt={item.title}
-              loading="lazy"
-              style={{
-                borderBottomLeftRadius: 4,
-                borderBottomRightRadius: 4,
-                display: "block",
-                width: "100%",
-              }}
-            />
-          </div>
-        ))}
-      </Masonry>
-    </Box>
+        <Masonry
+          columns={3}
+          spacing={2}
+          sx={{
+            display: "flex",
+            justify: "center",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "flex",
+            minHeight: "flex",
+          }}
+        >
+          {topFit.map((item, index) => (
+            <div key={index}>
+              <img
+                src={`${item.image}?w=162&auto=format`}
+                srcSet={`${item.image}?w=162&auto=format&dpr=2 2x`}
+                alt={item.title}
+                loading="lazy"
+                style={{
+                  borderBottomLeftRadius: 4,
+                  borderBottomRightRadius: 4,
+                  display: "block",
+                  width: "100%",
+                }}
+              />
+            </div>
+          ))}
+        </Masonry>
+      </Box>
+    </>
   );
 }
 

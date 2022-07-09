@@ -38,15 +38,16 @@ const theme = createTheme({
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [curUser, setCurUser] = useState(null);
+  const [photos, setPhotos] = useState([]);
   const [images, setImages] = useState([]);
-
+  const [curUser, setCurUser] = useState([]);
   useEffect(() => {
     fetch("/authorized_user").then((res) => {
       if (res.ok) {
         res.json().then((user) => {
-          setIsAuthenticated(true);
           setCurUser(user);
+          setPhotos(user.photos);
+          setIsAuthenticated(true);
         });
       }
     });
@@ -57,13 +58,13 @@ function App() {
       .then((r) => r.json())
       .then((data) => setImages(data));
   }, []);
-
+  console.log(photos);
   if (!isAuthenticated)
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div height="100px">
-          <NavBar isAuthenticated={isAuthenticated} />
+          <NavBar isAuthenticated={isAuthenticated} photos={photos} />
         </div>
         <Routes>
           <Route path="/" element={<Navigate replace to="/Landing" />} />
@@ -72,8 +73,8 @@ function App() {
             element={
               <Landing
                 setIsAuthenticated={setIsAuthenticated}
-                curUser={curUser}
-                setCurUser={setCurUser}
+                photos={photos}
+                setPhotos={setPhotos}
                 image={image}
                 isAuthenticated={isAuthenticated}
                 images={images}
@@ -84,28 +85,39 @@ function App() {
             path="/login"
             element={
               <Login
+                curUser={curUser}
                 setCurUser={setCurUser}
+                photos={photos}
+                setPhotos={setPhotos}
                 setIsAuthenticated={setIsAuthenticated}
               />
             }
           />
           <Route path="/about" element={<About image={image} />}></Route>
-          <Route path="/NewUserForm" element={<NewUserForm />}></Route>
           <Route
-            path="/Profile"
+            path="/NewUserForm"
             element={
               <NewUserForm
-                setIsAuthenticated={setIsAuthenticated}
+                setCurUser={setCurUser}
                 setIsAuthenticated={setIsAuthenticated}
               />
             }
           ></Route>
-          <Route path="/TopFits" element={<TopFits />}></Route>
+          <Route
+            path="/Profile"
+            element={
+              <NewUserForm
+                setCurUser={setCurUser}
+                setIsAuthenticated={setIsAuthenticated}
+              />
+            }
+          ></Route>
+          <Route path="/TopFits" element={<TopFits images={images} />}></Route>
           <Route
             path="/Logout"
             element={
               <Logout
-                setCurUser={setCurUser}
+                setPhotos={setPhotos}
                 setIsAuthenticated={setIsAuthenticated}
               />
             }
@@ -118,7 +130,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div>
-          <NavBar isAuthenticated={isAuthenticated} />
+          <NavBar isAuthenticated={isAuthenticated} photos={photos} />
         </div>
         <Routes>
           <Route path="/" element={<Navigate replace to="/Landing" />} />
@@ -130,24 +142,24 @@ function App() {
                 images={images}
                 image={image}
                 setIsAuthenticated={setIsAuthenticated}
-                curUser={curUser}
-                setCurUser={setCurUser}
+                photos={photos}
+                setPhotos={setPhotos}
                 isAuthenticated={isAuthenticated}
               />
             }
           ></Route>
           <Route path="/about" element={<About />}></Route>
-          <Route path="/NewUserForm" element={<NewUserForm />}></Route>
+
           <Route
             path="/Profile"
             element={<UserProfile images={images} />}
           ></Route>
-          <Route path="/TopFits" element={<TopFits />}></Route>
+          <Route path="/TopFits" element={<TopFits images={images} />}></Route>
           <Route
             path="/Logout"
             element={
               <Logout
-                setCurUser={setCurUser}
+                setPhotos={setPhotos}
                 setIsAuthenticated={setIsAuthenticated}
               />
             }
