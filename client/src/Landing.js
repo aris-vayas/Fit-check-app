@@ -13,6 +13,7 @@ function Landing({
   isAuthenticated,
   images,
   setPhotos,
+  setScore,
 }) {
   const [count, setCount] = useState(0);
   console.log(curUser);
@@ -72,7 +73,7 @@ function Landing({
             alignItems="center"
             justify="center"
           >
-            <Card count={count} setCount={setCount} images={images} />
+            <Card setScore={setScore} setCount={setCount} images={images} />
           </Grid>
         </Grid>
       </div>

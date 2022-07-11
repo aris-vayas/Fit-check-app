@@ -12,6 +12,7 @@ import Grid from "@mui/material/Grid";
 import { Paper } from "@mui/material";
 import Logout from "./Logout";
 import Login from "./Login";
+import ResetPassword from "./ResetPassword";
 
 const image =
   " https://images.creativemarket.com/0.1.0/ps/1046651/2000/2000/m1/fpnw/wm0/80s-inspired-patterns-2.0-02-.jpg?1456936583&s=d8e1ae51ac718b8fd73306485d9a1170";
@@ -41,23 +42,27 @@ function App() {
   const [photos, setPhotos] = useState([]);
   const [images, setImages] = useState([]);
   const [curUser, setCurUser] = useState([]);
+  const [loggedUser, setLoggedUser] = useState([]);
+  const [score, setScore] = useState([]);
   useEffect(() => {
     fetch("/authorized_user").then((res) => {
       if (res.ok) {
         res.json().then((user) => {
-          setCurUser(user);
+          console.log("fired", user);
+          setLoggedUser(user);
           setPhotos(user.photos);
           setIsAuthenticated(true);
         });
       }
     });
-  }, []);
+  }, [curUser, score]);
 
   useEffect(() => {
     fetch("/photos")
       .then((r) => r.json())
       .then((data) => setImages(data));
-  }, []);
+  }, [photos]);
+
   console.log(photos);
   if (!isAuthenticated)
     return (
@@ -78,6 +83,7 @@ function App() {
                 image={image}
                 isAuthenticated={isAuthenticated}
                 images={images}
+                setScore={setScore}
               />
             }
           ></Route>
@@ -122,6 +128,7 @@ function App() {
               />
             }
           ></Route>
+          <Route path="/PasswordReset" element={<ResetPassword />}></Route>
         </Routes>
       </ThemeProvider>
     );
@@ -144,6 +151,7 @@ function App() {
                 setIsAuthenticated={setIsAuthenticated}
                 photos={photos}
                 setPhotos={setPhotos}
+                setScore={setScore}
                 isAuthenticated={isAuthenticated}
               />
             }
@@ -152,7 +160,13 @@ function App() {
 
           <Route
             path="/Profile"
-            element={<UserProfile images={images} />}
+            element={
+              <UserProfile
+                photos={photos}
+                loggedUser={loggedUser}
+                images={images}
+              />
+            }
           ></Route>
           <Route path="/TopFits" element={<TopFits images={images} />}></Route>
           <Route

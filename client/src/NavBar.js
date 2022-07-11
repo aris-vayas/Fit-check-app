@@ -17,23 +17,23 @@ import { Link } from "react-router-dom";
 
 export default function NavBar({ isAuthenticated, photos }) {
   //appear at top of each page and be adapative for logged in or regular uusers
-  console.log(photos);
+
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const sortedPhoto = photos.sort(function (a, b) {
     const nameA = a.score;
     const nameB = b.score;
-    if (nameA < nameB) {
+    if (nameA > nameB) {
       return -1;
     }
-    if (nameA > nameB) {
+    if (nameA < nameB) {
       return 1;
     }
   });
   // const handleChange = (event) => {
   //   setAuth(event.target.checked);
   // };
-  console.log(sortedPhoto);
+  console.log("in navBAr", sortedPhoto);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -197,7 +197,7 @@ export default function NavBar({ isAuthenticated, photos }) {
                   alt="User Profile"
                   //change src to the top fit from state
 
-                  src={!sortedPhoto[1] ? "default" : sortedPhoto[0].image}
+                  src={sortedPhoto[0] ? sortedPhoto[0].image : "default"}
 
                   //change src to the top fit from state
                 />
@@ -221,7 +221,7 @@ export default function NavBar({ isAuthenticated, photos }) {
                 <MenuItem component={Link} to="/Profile" onClick={handleClose}>
                   Profile
                 </MenuItem>
-                <MenuItem component={Link} to="/landing" onClick={handleClose}>
+                <MenuItem component={Link} to="/Topfits" onClick={handleClose}>
                   Top Fits
                 </MenuItem>
                 <MenuItem onClick={handleClose} component={Link} to="/Logout">

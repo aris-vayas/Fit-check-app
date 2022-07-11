@@ -11,10 +11,10 @@ Rails.application.routes.draw do
       to: 'fallback#index',
       constraints: ->(req) { !req.xhr? && req.format.html? }
 get '/authorized_user', to: 'users#show'
-get '/welcome_email', to: 'users#email'
+get '/reset', to: 'users#email'
 get '/best_fits', to: 'photos#best_fits'
-# post '/upvote', to: 'photos#upvote'
-# post '/downvote', to: 'photos#downvote'
+get '/best_pic', to: 'users#best_pic'
+get '/user_photos', to: 'users#user_photos'
 
 
       # Login / Logout Routes

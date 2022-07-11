@@ -11,6 +11,11 @@ class PhotosController < ApplicationController
             render json: photo
     end
    
+    def create
+        photo = Photo.create!(photo_params)
+      
+        render json: photo, status: :created
+    end
    
     def update
         @photo= Photo.find_by!(id: params[:id])
@@ -30,4 +35,10 @@ class PhotosController < ApplicationController
         render json: @photo
     end
 
+
+
+    private
+    def photo_params
+params.permit(:image, :user_id, :score)
+    end
 end

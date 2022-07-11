@@ -5,9 +5,7 @@ import "./TinderCards.css";
 import Button from "@mui/material/Button";
 import { PostAdd } from "@material-ui/icons";
 let scoreObj = {};
-function TinderCards({ count, setCount, images }) {
-  const [score, setScore] = useState(0);
-
+function TinderCards({ count, setCount, images, setScore }) {
   const swiped = (direction, image) => {
     if (direction === "left") {
       console.log("left");
@@ -26,7 +24,7 @@ function TinderCards({ count, setCount, images }) {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(scoreObj),
-    }).then((data) => console.log(data));
+    }).then((data) => setScore(data));
 
     fetch("/count")
       .then((r) => r.json())

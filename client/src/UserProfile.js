@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
@@ -28,13 +29,33 @@ import Link from "@mui/material/Link";
 import StarIcon from "@mui/icons-material/Star";
 import DeleteIcon from "@mui/icons-material/Delete";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import ProfileBestFit from "./ProfileBestFits";
+import UserProfLanding from "./UserProfLanding";
+import ProfileBestFits from "./ProfileBestFits";
+import AddAFit from "./AddAFit";
+import { Add } from "@material-ui/icons";
+import WorstFits from "./WorstFits";
+import ResetPassword from "./ResetPassword";
+import EditProfile from "./EditProfile";
 const drawerWidth = 240;
 
-export default function ClippedDrawer({ images }) {
+export default function ClippedDrawer({ images, loggedUser, photos }) {
+  console.log(loggedUser);
+  //uiseEffect to fecth user.photos.all
+  //on click changes state of the order of the photos with sort funcitoins
+  //add a fit is a page direct to
   const StyledAccordion = styled(Accordion)(({ theme }) => ({
     backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
     color: theme.palette.text.secondary,
   }));
+  const [myPics, setMyPics] = useState([]);
+  const [profile, setProfile] = useState("landing");
+  useEffect(() => {
+    fetch(`/user_photos`)
+      .then((r) => r.json())
+      .then((data) => setMyPics(data));
+  }, []);
+  console.log(myPics);
   function handleClick() {
     console.log("click");
   }
@@ -57,7 +78,7 @@ export default function ClippedDrawer({ images }) {
         <Box sx={{ overflow: "auto" }}>
           <List>
             <ListItem key={0} disablePadding>
-              <ListItemButton component={Link} to={`/text`}>
+              <ListItemButton onClick={() => setProfile("bestFits")}>
                 <ListItemIcon>
                   <StarIcon />
                 </ListItemIcon>
@@ -65,7 +86,7 @@ export default function ClippedDrawer({ images }) {
               </ListItemButton>
             </ListItem>
             <ListItem key={1} disablePadding>
-              <ListItemButton component={Link} to={`/text`}>
+              <ListItemButton onClick={() => setProfile("Myfits")}>
                 <ListItemIcon>
                   <StarIcon />
                 </ListItemIcon>
@@ -73,7 +94,7 @@ export default function ClippedDrawer({ images }) {
               </ListItemButton>
             </ListItem>
             <ListItem key={2} disablePadding>
-              <ListItemButton component={Link} to={`text`}>
+              <ListItemButton onClick={() => setProfile("worstFits")}>
                 <ListItemIcon>
                   <StarIcon />
                 </ListItemIcon>
@@ -81,7 +102,7 @@ export default function ClippedDrawer({ images }) {
               </ListItemButton>
             </ListItem>
             <ListItem key={3} disablePadding>
-              <ListItemButton component={Link} to={`/addfit`}>
+              <ListItemButton onClick={() => setProfile("addafit")}>
                 <ListItemIcon>
                   <StarIcon />
                 </ListItemIcon>
@@ -91,163 +112,42 @@ export default function ClippedDrawer({ images }) {
           </List>
           <Divider />
           <List>
-            {["Reset Password", "Edit Profile", "Delete Account"].map(
-              (text, index) => (
-                <ListItem key={text} disablePadding>
-                  <ListItemButton>
-                    <ListItemIcon>
-                      <DeleteIcon />
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItemButton>
-                </ListItem>
-              )
-            )}
+            {["Reset Password", "Edit Profile"].map((text, index) => (
+              <ListItem key={text} disablePadding>
+                <ListItemButton onClick={() => setProfile(`${text}`)}>
+                  <ListItemIcon>
+                    <DeleteIcon />
+                  </ListItemIcon>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </ListItem>
+            ))}
           </List>
         </Box>
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <Toolbar
-          sx={{
-            mr: 2,
-            display: { xs: "none", md: "flex" },
-            fontFamily: "monospace",
-            fontWeight: 700,
-            letterSpacing: ".3rem",
-            color: "inherit",
-            textDecoration: "none",
-            justifyContent: "center",
-          }}
-        >
-          <Typography
-            justifyContent="center"
-            variant="h2"
-            noWrap
-            sx={{
-              mr: 12,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            Your Profile Page
-          </Typography>
-        </Toolbar>
-        <Box
-          sx={{
-            display: "flex",
-            justify: "center",
-            justifyContent: "center",
-            alignItems: "center",
-            width: "flex",
-            minHeight: "flex",
-          }}
-        >
-          <Masonry
-            columns={3}
-            spacing={2}
-            sx={{
-              display: "flex",
-              justify: "center",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "flex",
-              minHeight: "flex",
-            }}
-          >
-            {itemData.map((item, index) => (
-              <div key={index}>
-                <img
-                  onClick={handleClick}
-                  src={`${item.img}?w=162&auto=format`}
-                  srcSet={`${item.img}?w=162&auto=format&dpr=2 2x`}
-                  alt={item.title}
-                  loading="lazy"
-                  style={{
-                    borderBottomLeftRadius: 4,
-                    borderBottomRightRadius: 4,
-                    display: "block",
-                    width: "100%",
-                  }}
-                ></img>
-              </div>
-            ))}
-          </Masonry>
-        </Box>
-      </Box>
+      {profile === "Myfits" ? (
+        <UserProfLanding
+          myPics={myPics}
+          loggedUser={loggedUser}
+          photos={photos}
+        />
+      ) : profile === "addafit" ? (
+        <AddAFit setProfile={setProfile} loggedUser={loggedUser} />
+      ) : profile === "bestFits" ? (
+        <ProfileBestFit photos={photos} />
+      ) : profile === "worstFits" ? (
+        <WorstFits photos={photos} />
+      ) : profile === "Reset Password" ? (
+        <ResetPassword />
+      ) : profile === "Edit Profile" ? (
+        <EditProfile loggedUser={loggedUser} />
+      ) : (
+        <UserProfLanding
+          myPics={myPics}
+          loggedUser={loggedUser}
+          photos={photos}
+        />
+      )}
     </Box>
   );
 }
-const itemData = [
-  {
-    img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
-    title: "Fern",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1627308595229-7830a5c91f9f",
-    title: "Snacks",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-    title: "Mushrooms",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1529655683826-aba9b3e77383",
-    title: "Tower",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-    title: "Sea star",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
-    title: "Honey",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-    title: "Basketball",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Breakfast",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1627328715728-7bcc1b5db87d",
-    title: "Tree",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-    title: "Burger",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
-    title: "Camera",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
-    title: "Coffee",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1627000086207-76eabf23aa2e",
-    title: "Camping Car",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
-    title: "Hats",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-    title: "Tomato basil",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1627328561499-a3584d4ee4f7",
-    title: "Mountain",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    title: "Bike",
-  },
-];
