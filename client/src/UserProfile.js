@@ -7,6 +7,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
+import VerticalAlignBottomIcon from "@mui/icons-material/VerticalAlignBottom";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -14,10 +15,13 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
+import VerticalAlignTopIcon from "@mui/icons-material/VerticalAlignTop";
 import NavBar from "./NavBar";
 import { styled } from "@mui/material/styles";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Masonry from "@mui/lab/Masonry";
+import EditIcon from "@mui/icons-material/Edit";
+import AddIcon from "@mui/icons-material/Add";
 import {
   Accordion,
   AccordionDetails,
@@ -64,7 +68,7 @@ export default function ClippedDrawer({ images, loggedUser, photos }) {
       <CssBaseline />
 
       <Drawer
-        PaperProps={{ style: { height: "65vh", marginTop: 160 } }}
+        PaperProps={{ style: { height: "45vh", marginTop: 160 } }}
         variant="permanent"
         sx={{
           width: drawerWidth,
@@ -80,7 +84,7 @@ export default function ClippedDrawer({ images, loggedUser, photos }) {
             <ListItem key={0} disablePadding>
               <ListItemButton onClick={() => setProfile("bestFits")}>
                 <ListItemIcon>
-                  <StarIcon />
+                  <VerticalAlignTopIcon />
                 </ListItemIcon>
                 <ListItemText primary={"BestFits"} />
               </ListItemButton>
@@ -96,7 +100,7 @@ export default function ClippedDrawer({ images, loggedUser, photos }) {
             <ListItem key={2} disablePadding>
               <ListItemButton onClick={() => setProfile("worstFits")}>
                 <ListItemIcon>
-                  <StarIcon />
+                  <VerticalAlignBottomIcon />
                 </ListItemIcon>
                 <ListItemText primary={"WorstFits"} />
               </ListItemButton>
@@ -104,24 +108,30 @@ export default function ClippedDrawer({ images, loggedUser, photos }) {
             <ListItem key={3} disablePadding>
               <ListItemButton onClick={() => setProfile("addafit")}>
                 <ListItemIcon>
-                  <StarIcon />
+                  <AddIcon />
                 </ListItemIcon>
-                <ListItemText primary={"add a fit"} />
+                <ListItemText primary={"Add a fit"} />
               </ListItemButton>
             </ListItem>
           </List>
           <Divider />
           <List>
-            {["Reset Password", "Edit Profile"].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton onClick={() => setProfile(`${text}`)}>
-                  <ListItemIcon>
-                    <DeleteIcon />
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => setProfile(`Reset Password`)}>
+                <ListItemIcon>
+                  <EditIcon />
+                </ListItemIcon>
+                <ListItemText primary="Reset Password" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => setProfile(`Edit Profile`)}>
+                <ListItemIcon>
+                  <EditIcon />
+                </ListItemIcon>
+                <ListItemText primary="Edit Profile" />
+              </ListItemButton>
+            </ListItem>
           </List>
         </Box>
       </Drawer>

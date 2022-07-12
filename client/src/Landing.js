@@ -14,8 +14,9 @@ function Landing({
   images,
   setPhotos,
   setScore,
+  count,
+  setCount,
 }) {
-  const [count, setCount] = useState(0);
   console.log(curUser);
   useEffect(() => {
     fetch("/hello")
@@ -39,14 +40,22 @@ function Landing({
           position="relative"
         >
           {count < 10 ? (
-            <Card count={count} setCount={setCount} images={images} />
-          ) : (
-            <Login
-              setCurUser={setCurUser}
-              setIsAuthenticated={setIsAuthenticated}
+            <Card
+              count={count}
+              setCount={setCount}
+              images={images}
+              setScore={setScore}
             />
+          ) : (
+            <Grid item>
+              <Login
+                setCount={setCount}
+                setCurUser={setCurUser}
+                setIsAuthenticated={setIsAuthenticated}
+                setPhotos={setPhotos}
+              />
+            </Grid>
           )}
-          <Grid item></Grid>
         </Grid>
       </div>
     );
@@ -73,7 +82,12 @@ function Landing({
             alignItems="center"
             justify="center"
           >
-            <Card setScore={setScore} setCount={setCount} images={images} />
+            <Card
+              setScore={setScore}
+              count={count}
+              setCount={setCount}
+              images={images}
+            />
           </Grid>
         </Grid>
       </div>

@@ -42,7 +42,7 @@ function BestFits({ photos }) {
             textDecoration: "none",
           }}
         >
-          Your Profile Page
+          Your TopFits
         </Typography>
       </Toolbar>
       <Box

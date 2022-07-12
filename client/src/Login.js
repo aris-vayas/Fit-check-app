@@ -32,6 +32,7 @@ const Login = ({
   setPhotos,
   curUser,
   setCurUser,
+  setCount,
 }) => {
   const classes = useStyles();
   // create state variables for each input
@@ -54,8 +55,10 @@ const Login = ({
     }).then((res) => {
       if (res.ok) {
         res.json().then((user) => {
-          setCurUser(user);
+          console.log("landing", user);
           setIsAuthenticated(true);
+          setCount(0);
+
           setPhotos(user.photos);
         });
         setUsername("");

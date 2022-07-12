@@ -45,10 +45,7 @@ function TinderCards({ count, setCount, images, setScore }) {
               <div
                 style={{ backgroundImage: `url(${image.image})` }}
                 className="card"
-              >
-                <Button>Vote</Button>
-              </div>
-              <div></div>
+              ></div>
             </TinderCard>
           ))}
         </div>

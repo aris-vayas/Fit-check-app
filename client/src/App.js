@@ -31,7 +31,16 @@ const theme = createTheme({
     typography: {
       allVariants: {
         fontFamily: "monospace",
-        fontSize: 12,
+        fontSize: 18,
+      },
+      components: {
+        MuiCssBaseline: {
+          styleOverrides: `
+          @font-face {
+            font-family: 'monospace';
+          }
+        `,
+        },
       },
     },
   },
@@ -44,6 +53,7 @@ function App() {
   const [curUser, setCurUser] = useState([]);
   const [loggedUser, setLoggedUser] = useState([]);
   const [score, setScore] = useState([]);
+  const [count, setCount] = useState(0);
   useEffect(() => {
     fetch("/authorized_user").then((res) => {
       if (res.ok) {
@@ -55,13 +65,13 @@ function App() {
         });
       }
     });
-  }, [curUser, score]);
+  }, [curUser]);
 
   useEffect(() => {
     fetch("/photos")
       .then((r) => r.json())
       .then((data) => setImages(data));
-  }, [photos]);
+  }, []);
 
   console.log(photos);
   if (!isAuthenticated)
@@ -77,6 +87,8 @@ function App() {
             path="/Landing"
             element={
               <Landing
+                count={count}
+                setCount={setCount}
                 setIsAuthenticated={setIsAuthenticated}
                 photos={photos}
                 setPhotos={setPhotos}
@@ -91,6 +103,7 @@ function App() {
             path="/login"
             element={
               <Login
+                setCount={setCount}
                 curUser={curUser}
                 setCurUser={setCurUser}
                 photos={photos}
@@ -146,6 +159,8 @@ function App() {
             path="/Landing"
             element={
               <Landing
+                count={count}
+                setCount={setCount}
                 images={images}
                 image={image}
                 setIsAuthenticated={setIsAuthenticated}

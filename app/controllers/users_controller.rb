@@ -27,13 +27,13 @@ class UsersController < ApplicationController
 #     render json: userPhotos
 # end
 
-    def email
-        byebug
-        user= find_by(id: session[:current_user])
-        UserMailer.welcome_email(user).deliver_now
-    end
+    # def email
+        
+    #     user= find_by(id: session[:current_user])
+    #     UserMailer.welcome_email(user).deliver_now
+    # end
 
-
+    
     def create
             user = User.create!(user_params)
             UserMailer.welcome_email(user).deliver_now

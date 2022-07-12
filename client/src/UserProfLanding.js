@@ -35,7 +35,7 @@ function UserProfLanding({ loggedUser, myPics }) {
             textDecoration: "none",
           }}
         >
-          Your Profile Page
+          AllFits
         </Typography>
       </Toolbar>
       <Box

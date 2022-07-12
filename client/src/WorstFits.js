@@ -43,7 +43,7 @@ function UserProfLanding({ photos }) {
             textDecoration: "none",
           }}
         >
-          Your Profile Page
+          WurstFit
         </Typography>
       </Toolbar>
       <Box

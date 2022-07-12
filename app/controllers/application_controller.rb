@@ -8,6 +8,6 @@ class ApplicationController < ActionController::API
 
 
       def hello_world
-        render json: {count: session[:current_user]}
+        render json: {count: session[:count]}
       end
 end

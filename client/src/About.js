@@ -48,16 +48,20 @@ export default function FixedColumns() {
       >
         <Card>
           <CardHeader
-            title="Blog Card"
+            title="REACT"
             action={
               <IconButton>
                 {" "}
-                <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
+                <Avatar
+                  sx={{ bgcolor: deepOrange[500], width: 100, height: 100 }}
+                >
+                  R
+                </Avatar>
               </IconButton>
             }
           />
           <CardContent>
-            <Typography>
+            <Typography variant="h5" fontFamily="monospace">
               React is a powerful tool for building single page web applications
               that builds on an understanding of JAVASCRIPT. While many of the
               built in tools allow for javascript code, the jump in logic on
@@ -157,58 +161,146 @@ export default function FixedColumns() {
         </Card>
         <Card>
           <CardHeader
+            variant="h4"
+            colorfontFamily="monospace"
             action={
               <IconButton>
                 {" "}
-                <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
+                <Avatar
+                  sx={{ bgcolor: deepOrange[500], width: 100, height: 100 }}
+                >
+                  M
+                </Avatar>
               </IconButton>
             }
-            title="Blog 2"
+            title="MaterialUI"
           />
           <CardContent>
-            <Typography>Blog 2</Typography>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader
-            title="Blog 3"
-            action={
-              <IconButton>
-                {" "}
-                <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
-              </IconButton>
-            }
-          />
-          <CardContent>
-            <Typography>
-              Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-              ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-              elementum integer enim neque volutpat ac tincidunt. Ornare
-              suspendisse sed nisi lacus sed viverra tellus. Purus sit amet
-              volutpat consequat mauris. Elementum eu facilisis sed odio morbi.
-              Euismod lacinia at quis risus sed vulputate odio. Morbi tincidunt
-              ornare massa eget egestas purus viverra accumsan in. In hendrerit
-              gravida rutrum quisque non tellus orci ac. Pellentesque nec nam
-              aliquam sem et tortor. Habitant morbi tristique senectus et.
-              Adipiscing elit duis tristique sollicitudin nibh sit. Ornare
-              aenean euismod elementum nisi quis eleifend. Commodo viverra
-              maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin
-              aliquam ultrices sagittis orci a.
+            <Typography variant="h5" fontFamily="monospace">
+              Material UI: The good and the bad Material ui is a powerful
+              addition to react hat uses many(many) prebuilt components to
+              develop a front end experience in REACT. By simply cut cop and
+              pasting you can render a full webpage with reactive gestures,
+              responsive features, and simple styles very, very easily. However
+              there is always a catch, being a very built and heavy component,
+              as well as very little documentation on styling, makes it a very
+              challenging task to customize these compoentners to create a
+              unique webpage and feel. With my time using the framework I have
+              come to appreciate certain things about it and will point out
+              others. The biggest and most daunting aspect of Material UI is
+              that its pretty generic and cheap looking out of the box. The
+              colors are harsh and unappealing as well as the default font etc.
+              changing this can be done one of two ways. The suggested method is
+              to override the defaults in the THEME OBJECT. Many tutorials
+              online can provide a good use of how to do this, but essentially
+              by renting the value of the appropriate key, one can set every
+              default color, font, etc to most of the compoentners. This is
+              great to depart from the starting colors and fonts however
+              impementiaon can be frustrating and in the end the easiest way to
+              quickly get a page setup is to use inline style assignments Moving
+              on from style, id like to identify the most useful features.i
+              found valuable: Masonry, Grid: this compentent was what drew me to
+              MUI in the first place. Its extensive mutability and relative ease
+              of setup allows for a quick setup. It allows to center and align
+              with page sizes and its easy to set up the relative layouts.
+              Beyond that its heavy framework with a lot of layers so import and
+              learn so I wouldn’t say it is any easier than learning another css
+              framework. Obviously CSS IS NOT TAUGHT AT FLATIRON so you can
+              learn whatever you want.
             </Typography>
           </CardContent>
         </Card>
         <Card>
           <CardHeader
-            title="Blog 4"
+            title="MFA and security on Your site "
+            color="inherit"
             action={
               <IconButton>
                 {" "}
-                <Avatar sx={{ bgcolor: deepOrange[500] }}>N</Avatar>
+                <Avatar
+                  sx={{ bgcolor: deepOrange[500], width: 100, height: 100 }}
+                >
+                  MFA{" "}
+                </Avatar>
               </IconButton>
             }
           />
           <CardContent>
-            <Typography>Blog 4</Typography>
+            <Typography variant="h5" fontFamily="monospace">
+              The whole internet is Hot or Not.com So the inspiration for this
+              site came from the joke I told myself every phase along the way,
+              every time I leaned more about the INTERNT. “ oh, so everything is
+              hot or not?”. And while I treated this aas a joke for the first
+              phases, after learning rails and how DB associations work, I
+              really was on to the idea that hot or not really buillt the
+              framework for the internet we use today. SO, AFTER DECIDING TO
+              MAKE THIS MY final project I researched HOT OR NOT in more detail
+              and found some interesting perspectives I feel are relevant for
+              this scope. Basically, YOUTUBE, TINDER, TWITTER, FACEBOOK, WERE
+              ALL BORN FROM hot or not. Baaically the idea of social media in
+              general was catapulted from HOT OR NOT. No MySpace, no instagram.
+              Nothing except the boring internet where you went and looked at
+              stuff. The Social Network jump. So the biggest thing that made hot
+              or not famous was the fact that mark zuckerbuerg who built a ton
+              of projects while in college, used the idea to start hi Harvard
+              picture voting platform that then spun off into Facebook. It is
+              interesting to note that many of the social media pitfalls
+              (comments and unsolicited feedback) were avoided during hot or
+              nots creation. It was here wheee there was a pure form of the
+              internet still, expcpet people could now log on to interact with
+              other humans in a way that was never before used. More notably as
+              well they came fro the asked of the 2000 dot com bubble pop where
+              billions (in 2000 dollars) were wiped out from the industry, not
+              much unlike today. It was the r bare bones and highly delevelpped
+              method of user bias that was conciouous of social media effect as
+              well as the pecieved sexism and judgment the site was based on.
+              However by making user experience and fun their foremost goal,
+              they were able to avoid the terribleness that human and bot trolls
+              can inflci on the network
+            </Typography>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader
+            title="ActionMailer and RAILS setup"
+            action={
+              <IconButton>
+                {" "}
+                <Avatar
+                  sx={{ bgcolor: deepOrange[500], width: 100, height: 100 }}
+                >
+                  AM
+                </Avatar>
+              </IconButton>
+            }
+          />
+          <CardContent>
+            <Typography variant="h5" fontFamily="monospace">
+              Action mailer and google POST 2022 UPDATE Acton mailer is powerful
+              tool offered through the RAILS backend.I can be triggered and to
+              send welcome emails, reset a password, or provide digital goods
+              via email in an e-commerce setting. SETUP: There are plenty of
+              tutorials setting up the mailer but I want to point out new
+              updates to google and some small GOTCHYAs to look out for. GOOGLE:
+              As of May, 30, 2022 google now requires an access key ( in a.
+              Departure from your google password) from an application or
+              website that requests to use their SMTP. To generate a key, simply
+              go to your google account and login in. Access your profile then
+              security settings. Under here w must first set up Multifactor
+              Authentication from google and set that up on your phone or
+              secondary email. From here you can then generate an APP key . This
+              key will simply replace your google password in the mailer
+              configuration. Caveats: You need to use a google key, not your
+              password Action mailer REQUIRES a text and html .erb file to
+              generate the email even if the email service only uses one of the
+              two The user_mailer html and text file must be named the same as
+              the method used to send the email. Ie, welcome_email We use RAILS
+              VIEW as the method to render the html and text in the email. This
+              differs from the client server relationship we have for most other
+              processes in this application Overall actionmaier is a simple to
+              use addition to the backend that allows powerful Email
+              capabilities
+            </Typography>
           </CardContent>
         </Card>
       </Masonry>
