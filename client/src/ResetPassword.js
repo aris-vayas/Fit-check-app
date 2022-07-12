@@ -32,42 +32,20 @@ const Login = ({
   setPhotos,
   curUser,
   setCurUser,
-  setCount,
 }) => {
   const classes = useStyles();
   // create state variables for each input
 
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
   const nav = useNavigate();
 
   function onSubmit(e) {
     e.preventDefault();
     const user = {
       username: username,
-      password: password,
+      email: email,
     };
-
-    fetch(`/Login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(user),
-    }).then((res) => {
-      if (res.ok) {
-        res.json().then((user) => {
-          console.log("landing", user);
-          setIsAuthenticated(true);
-          setCount(0);
-
-          setPhotos(user.photos);
-        });
-        setUsername("");
-        setPassword("");
-      } else {
-        res.json().then((json) => console.log(json.errors));
-      }
-      nav("/landing");
-    });
   }
 
   return (
@@ -83,27 +61,16 @@ const Login = ({
             onChange={(e) => setUsername(e.target.value)}
           />
           <TextField
-            label="Password"
+            label="Email"
             variant="filled"
-            type="password"
+            type="email"
             required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <div>
-            <Button variant="contained" component={Link} to="/NewUserForm">
-              New? Signup
-            </Button>
             <Button type="submit" variant="contained" color="primary">
-              Signin
-            </Button>
-            <Button
-              component={Link}
-              to="/PasswordReset"
-              variant="contained"
-              color="primary"
-            >
-              forgotPassword?
+              Send Email Reset
             </Button>
           </div>
         </Card>

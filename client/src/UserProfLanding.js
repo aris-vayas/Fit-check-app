@@ -1,29 +1,14 @@
-import * as React from "react";
+import React from "react";
 import { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
+import { Box, Toolbar, Typography } from "@mui/material";
 import Masonry from "@mui/lab/Masonry";
-import { styled } from "@mui/material/styles";
-import Grid from "@mui/material/Grid";
-import {
-  Typography,
-  Toolbar,
-  Button,
-  Switch,
-  FormGroup,
-  FormControlLabel,
-} from "@mui/material";
 
-export default function ImageMasonry({ images }) {
-  const [topFit, setTopFit] = useState([]);
-  useEffect(() => {
-    fetch("/best_fits")
-      .then((r) => r.json())
-      .then((data) => setTopFit(data));
-  }, []);
-  console.log("topfit", topFit);
+function UserProfLanding({ loggedUser, myPics }) {
+  function handleClick(event) {
+    console.log("delete");
+  }
   return (
-    <>
+    <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
       <Toolbar
         sx={{
           mr: 2,
@@ -50,20 +35,8 @@ export default function ImageMasonry({ images }) {
             textDecoration: "none",
           }}
         >
-          TopFits
+          AllFits
         </Typography>
-        {/* <FormGroup>
-          <FormControlLabel
-            control={
-              <Switch
-                checked={topFitState}
-                onChange={handleFilterFit}
-                aria-label="login switch"
-              />
-            }
-            label="togglefits"
-          />
-        </FormGroup> */}
       </Toolbar>
       <Box
         sx={{
@@ -87,9 +60,10 @@ export default function ImageMasonry({ images }) {
             minHeight: "flex",
           }}
         >
-          {topFit.map((item, index) => (
+          {myPics.map((item, index) => (
             <div key={index}>
               <img
+                onClick={handleClick}
                 src={`${item.image}?w=162&auto=format`}
                 srcSet={`${item.image}?w=162&auto=format&dpr=2 2x`}
                 alt={item.title}
@@ -100,15 +74,16 @@ export default function ImageMasonry({ images }) {
                   display: "block",
                   width: "100%",
                 }}
-              />
+              ></img>
             </div>
           ))}
         </Masonry>
       </Box>
-    </>
+    </Box>
   );
 }
 
+export default UserProfLanding;
 const itemData = [
   {
     img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",

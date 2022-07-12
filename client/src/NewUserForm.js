@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Toolbar, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Login from "./Login";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,8 +23,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NewUserForm = ({ handleClose, setIsAuthenticated }) => {
+const NewUserForm = ({ handleClose, setIsAuthenticated, setCurUser }) => {
   const classes = useStyles();
+  const nav = useNavigate();
   // create state variables for each input
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -39,7 +40,7 @@ const NewUserForm = ({ handleClose, setIsAuthenticated }) => {
       password: password,
       full_name: `${firstName} ${lastName}`,
     };
-    console.log(user);
+
     fetch(`/users`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -47,7 +48,8 @@ const NewUserForm = ({ handleClose, setIsAuthenticated }) => {
     }).then((res) => {
       if (res.ok) {
         res.json().then((user) => {
-          console.log(user);
+          setCurUser(user);
+          setIsAuthenticated(true);
         });
       } else {
         res.json().then((json) => console.log(json.errors));
@@ -57,6 +59,8 @@ const NewUserForm = ({ handleClose, setIsAuthenticated }) => {
     setLastName("");
     setFirstName("");
     setPassword("");
+
+    nav("/landing");
   }
   function handleForgotPassword() {
     fetch(`/welcome_email`)

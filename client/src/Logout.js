@@ -1,13 +1,13 @@
 import React from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
-function Logout({ setIsAuthenticated, setCurUser }) {
+function Logout({ setIsAuthenticated, setPhotos }) {
   const nav = useNavigate();
   fetch("/logout", {
     method: "DELETE",
   }).then(() => {
     setIsAuthenticated(false);
-    setCurUser(null);
+    setPhotos([]);
   });
 
   nav("/landing");

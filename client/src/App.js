@@ -12,6 +12,7 @@ import Grid from "@mui/material/Grid";
 import { Paper } from "@mui/material";
 import Logout from "./Logout";
 import Login from "./Login";
+import ResetPassword from "./ResetPassword";
 
 const image =
   " https://images.creativemarket.com/0.1.0/ps/1046651/2000/2000/m1/fpnw/wm0/80s-inspired-patterns-2.0-02-.jpg?1456936583&s=d8e1ae51ac718b8fd73306485d9a1170";
@@ -30,7 +31,16 @@ const theme = createTheme({
     typography: {
       allVariants: {
         fontFamily: "monospace",
-        fontSize: 12,
+        fontSize: 18,
+      },
+      components: {
+        MuiCssBaseline: {
+          styleOverrides: `
+          @font-face {
+            font-family: 'monospace';
+          }
+        `,
+        },
       },
     },
   },
@@ -38,19 +48,24 @@ const theme = createTheme({
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [curUser, setCurUser] = useState(null);
+  const [photos, setPhotos] = useState([]);
   const [images, setImages] = useState([]);
-
+  const [curUser, setCurUser] = useState([]);
+  const [loggedUser, setLoggedUser] = useState([]);
+  const [score, setScore] = useState([]);
+  const [count, setCount] = useState(0);
   useEffect(() => {
     fetch("/authorized_user").then((res) => {
       if (res.ok) {
         res.json().then((user) => {
+          console.log("fired", user);
+          setLoggedUser(user);
+          setPhotos(user.photos);
           setIsAuthenticated(true);
-          setCurUser(user);
         });
       }
     });
-  }, []);
+  }, [curUser]);
 
   useEffect(() => {
     fetch("/photos")
@@ -58,12 +73,13 @@ function App() {
       .then((data) => setImages(data));
   }, []);
 
+  console.log(photos);
   if (!isAuthenticated)
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div height="100px">
-          <NavBar isAuthenticated={isAuthenticated} />
+          <NavBar isAuthenticated={isAuthenticated} photos={photos} />
         </div>
         <Routes>
           <Route path="/" element={<Navigate replace to="/Landing" />} />
@@ -71,12 +87,15 @@ function App() {
             path="/Landing"
             element={
               <Landing
+                count={count}
+                setCount={setCount}
                 setIsAuthenticated={setIsAuthenticated}
-                curUser={curUser}
-                setCurUser={setCurUser}
+                photos={photos}
+                setPhotos={setPhotos}
                 image={image}
                 isAuthenticated={isAuthenticated}
                 images={images}
+                setScore={setScore}
               />
             }
           ></Route>
@@ -84,32 +103,45 @@ function App() {
             path="/login"
             element={
               <Login
+                setCount={setCount}
+                curUser={curUser}
                 setCurUser={setCurUser}
+                photos={photos}
+                setPhotos={setPhotos}
                 setIsAuthenticated={setIsAuthenticated}
               />
             }
           />
           <Route path="/about" element={<About image={image} />}></Route>
-          <Route path="/NewUserForm" element={<NewUserForm />}></Route>
           <Route
-            path="/Profile"
+            path="/NewUserForm"
             element={
               <NewUserForm
-                setIsAuthenticated={setIsAuthenticated}
-                setIsAuthenticated={setIsAuthenticated}
-              />
-            }
-          ></Route>
-          <Route path="/TopFits" element={<TopFits />}></Route>
-          <Route
-            path="/Logout"
-            element={
-              <Logout
                 setCurUser={setCurUser}
                 setIsAuthenticated={setIsAuthenticated}
               />
             }
           ></Route>
+          <Route
+            path="/Profile"
+            element={
+              <NewUserForm
+                setCurUser={setCurUser}
+                setIsAuthenticated={setIsAuthenticated}
+              />
+            }
+          ></Route>
+          <Route path="/TopFits" element={<TopFits images={images} />}></Route>
+          <Route
+            path="/Logout"
+            element={
+              <Logout
+                setPhotos={setPhotos}
+                setIsAuthenticated={setIsAuthenticated}
+              />
+            }
+          ></Route>
+          <Route path="/PasswordReset" element={<ResetPassword />}></Route>
         </Routes>
       </ThemeProvider>
     );
@@ -118,7 +150,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div>
-          <NavBar isAuthenticated={isAuthenticated} />
+          <NavBar isAuthenticated={isAuthenticated} photos={photos} />
         </div>
         <Routes>
           <Route path="/" element={<Navigate replace to="/Landing" />} />
@@ -127,27 +159,36 @@ function App() {
             path="/Landing"
             element={
               <Landing
+                count={count}
+                setCount={setCount}
                 images={images}
                 image={image}
                 setIsAuthenticated={setIsAuthenticated}
-                curUser={curUser}
-                setCurUser={setCurUser}
+                photos={photos}
+                setPhotos={setPhotos}
+                setScore={setScore}
                 isAuthenticated={isAuthenticated}
               />
             }
           ></Route>
           <Route path="/about" element={<About />}></Route>
-          <Route path="/NewUserForm" element={<NewUserForm />}></Route>
+
           <Route
             path="/Profile"
-            element={<UserProfile images={images} />}
+            element={
+              <UserProfile
+                photos={photos}
+                loggedUser={loggedUser}
+                images={images}
+              />
+            }
           ></Route>
-          <Route path="/TopFits" element={<TopFits />}></Route>
+          <Route path="/TopFits" element={<TopFits images={images} />}></Route>
           <Route
             path="/Logout"
             element={
               <Logout
-                setCurUser={setCurUser}
+                setPhotos={setPhotos}
                 setIsAuthenticated={setIsAuthenticated}
               />
             }
