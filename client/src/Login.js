@@ -70,11 +70,13 @@ const Login = ({
         });
         setUsername("");
         setPassword("");
+        nav("/landing");
       } else {
         res.json().then((json) => setError(json.errors));
+        setUsername("");
+        setPassword("");
         setOpen(true);
       }
-      nav("/landing");
     });
   }
 

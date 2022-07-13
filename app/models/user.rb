@@ -4,6 +4,7 @@ class User < ApplicationRecord
 
     has_secure_password
     validates :password, presence: true
+    validates :username, uniqueness: true
 
     def generate_password_token!
         self.reset_password_token = generate_token
@@ -16,16 +17,14 @@ class User < ApplicationRecord
        end
        
        def reset_password!(password)
-        
         self.reset_password_token = nil
         self.update!(password: password)
-    
        end
        
        private
-       def password_params
-            params.permit(:password)
-       end
+#        def password_params
+# params.permit(:password_digest)
+#        end
        def generate_token
         SecureRandom.hex(10)
        end

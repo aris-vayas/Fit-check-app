@@ -38,6 +38,8 @@ class UsersController < ApplicationController
             user = User.create!(user_params)
             UserMailer.welcome_email(user).deliver_now
             session[:current_user] = user.id
+
+            
             render json: user , status: :created
     end
 

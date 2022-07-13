@@ -30,8 +30,7 @@ class PasswordController < ApplicationController
         user = User.find_by(reset_password_token: token)
     
         if user.present? && user.password_token_valid?
-          
-          if user.reset_password!( update_params)
+          if user.reset_password!( params[:password])
             user.reset_password_token = nil
             render json: {status: 'ok'}, status: :ok
           else
@@ -42,8 +41,6 @@ class PasswordController < ApplicationController
         end
       end
    
-def update_params
-params.permit(:password, :token)
-end
+
 
 end
