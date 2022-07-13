@@ -53,8 +53,8 @@ const Login = ({
       body: JSON.stringify(user),
     })
       .then((res) => res.json())
-      .then((user) => {
-        console.log(user);
+      .then((error) => {
+        console.log(error);
       });
 
     setUsername("");
