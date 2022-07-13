@@ -13,7 +13,7 @@ import { Paper } from "@mui/material";
 import Logout from "./Logout";
 import Login from "./Login";
 import ResetPassword from "./ResetPassword";
-
+import TokenPage from "./TokenPage";
 const image =
   " https://images.creativemarket.com/0.1.0/ps/1046651/2000/2000/m1/fpnw/wm0/80s-inspired-patterns-2.0-02-.jpg?1456936583&s=d8e1ae51ac718b8fd73306485d9a1170";
 const theme = createTheme({
@@ -78,11 +78,13 @@ function App() {
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
+
         <div height="100px">
           <NavBar isAuthenticated={isAuthenticated} photos={photos} />
         </div>
         <Routes>
           <Route path="/" element={<Navigate replace to="/Landing" />} />
+          <Route path="/tokenpage" element={<TokenPage />}></Route>
           <Route
             path="/Landing"
             element={
@@ -113,6 +115,7 @@ function App() {
             }
           />
           <Route path="/about" element={<About image={image} />}></Route>
+
           <Route
             path="/NewUserForm"
             element={
@@ -180,6 +183,7 @@ function App() {
                 photos={photos}
                 loggedUser={loggedUser}
                 images={images}
+                theme={theme}
               />
             }
           ></Route>

@@ -20,16 +20,19 @@ class PasswordController < ApplicationController
       end
     
       def reset
+      
         token = params[:token].to_s
     
-        if params[:email].blank?
+        if params[:token].blank?
           return render json: {error: 'Token not present'}
         end
     
         user = User.find_by(reset_password_token: token)
     
         if user.present? && user.password_token_valid?
-          if user.reset_password!(params[:password])
+          
+          if user.reset_password!( update_params)
+            user.reset_password_token = nil
             render json: {status: 'ok'}, status: :ok
           else
             render json: {error: user.errors.full_messages}, status: :unprocessable_entity
@@ -39,6 +42,8 @@ class PasswordController < ApplicationController
         end
       end
    
-
+def update_params
+params.permit(:password, :token)
+end
 
 end

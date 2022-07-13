@@ -41,9 +41,10 @@ import { Add } from "@material-ui/icons";
 import WorstFits from "./WorstFits";
 import ResetPassword from "./ResetPassword";
 import EditProfile from "./EditProfile";
+import { ThemeProvider } from "@mui/styles";
 const drawerWidth = 240;
 
-export default function ClippedDrawer({ images, loggedUser, photos }) {
+export default function ClippedDrawer({ images, loggedUser, photos, theme }) {
   console.log(loggedUser);
   //uiseEffect to fecth user.photos.all
   //on click changes state of the order of the photos with sort funcitoins
@@ -64,100 +65,110 @@ export default function ClippedDrawer({ images, loggedUser, photos }) {
     console.log("click");
   }
   return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
+    <>
+      <ThemeProvider theme={theme}>
+        <Box sx={{ display: "flex" }}>
+          <Drawer
+            PaperProps={{
+              style: { height: "45vh", marginTop: 160, elevation: 4 },
+            }}
+            variant="permanent"
+            sx={{
+              fontFamily: "monospace",
+              color: "primary",
+              width: drawerWidth,
+              flexShrink: 0,
+              [`& .MuiDrawer-paper`]: {
+                width: drawerWidth,
+                boxSizing: "border-box",
+              },
+            }}
+          >
+            <Box sx={{ overflow: "auto" }}>
+              <List>
+                <ListItem key={0} disablePadding>
+                  <ListItemButton
+                    fontFamily="monospace"
+                    onClick={() => setProfile("bestFits")}
+                  >
+                    <ListItemIcon>
+                      <VerticalAlignTopIcon />
+                    </ListItemIcon>
+                    <ListItemText fontFamily="monospace" primary={"BestFits"} />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem key={1} disablePadding>
+                  <ListItemButton onClick={() => setProfile("Myfits")}>
+                    <ListItemIcon>
+                      <StarIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={"Myfits"} />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem key={2} disablePadding>
+                  <ListItemButton onClick={() => setProfile("worstFits")}>
+                    <ListItemIcon>
+                      <VerticalAlignBottomIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={"WorstFits"} />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem key={3} disablePadding>
+                  <ListItemButton onClick={() => setProfile("addafit")}>
+                    <ListItemIcon>
+                      <AddIcon />
+                    </ListItemIcon>
+                    <ListItemText primary={"Add a fit"} />
+                  </ListItemButton>
+                </ListItem>
+              </List>
+              <Divider />
+              <List>
+                <ListItem disablePadding>
+                  <ListItemButton onClick={() => setProfile(`Reset Password`)}>
+                    <ListItemIcon>
+                      <EditIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Reset Password" />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton onClick={() => setProfile(`Edit Profile`)}>
+                    <ListItemIcon>
+                      <EditIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Edit Profile" />
+                  </ListItemButton>
+                </ListItem>
+              </List>
+            </Box>
+          </Drawer>
 
-      <Drawer
-        PaperProps={{ style: { height: "45vh", marginTop: 160 } }}
-        variant="permanent"
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          [`& .MuiDrawer-paper`]: {
-            width: drawerWidth,
-            boxSizing: "border-box",
-          },
-        }}
-      >
-        <Box sx={{ overflow: "auto" }}>
-          <List>
-            <ListItem key={0} disablePadding>
-              <ListItemButton onClick={() => setProfile("bestFits")}>
-                <ListItemIcon>
-                  <VerticalAlignTopIcon />
-                </ListItemIcon>
-                <ListItemText primary={"BestFits"} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem key={1} disablePadding>
-              <ListItemButton onClick={() => setProfile("Myfits")}>
-                <ListItemIcon>
-                  <StarIcon />
-                </ListItemIcon>
-                <ListItemText primary={"Myfits"} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem key={2} disablePadding>
-              <ListItemButton onClick={() => setProfile("worstFits")}>
-                <ListItemIcon>
-                  <VerticalAlignBottomIcon />
-                </ListItemIcon>
-                <ListItemText primary={"WorstFits"} />
-              </ListItemButton>
-            </ListItem>
-            <ListItem key={3} disablePadding>
-              <ListItemButton onClick={() => setProfile("addafit")}>
-                <ListItemIcon>
-                  <AddIcon />
-                </ListItemIcon>
-                <ListItemText primary={"Add a fit"} />
-              </ListItemButton>
-            </ListItem>
-          </List>
-          <Divider />
-          <List>
-            <ListItem disablePadding>
-              <ListItemButton onClick={() => setProfile(`Reset Password`)}>
-                <ListItemIcon>
-                  <EditIcon />
-                </ListItemIcon>
-                <ListItemText primary="Reset Password" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton onClick={() => setProfile(`Edit Profile`)}>
-                <ListItemIcon>
-                  <EditIcon />
-                </ListItemIcon>
-                <ListItemText primary="Edit Profile" />
-              </ListItemButton>
-            </ListItem>
-          </List>
+          {profile === "Myfits" ? (
+            <UserProfLanding
+              myPics={myPics}
+              loggedUser={loggedUser}
+              photos={photos}
+            />
+          ) : profile === "addafit" ? (
+            <AddAFit setProfile={setProfile} loggedUser={loggedUser} />
+          ) : profile === "bestFits" ? (
+            <ProfileBestFit photos={photos} />
+          ) : profile === "worstFits" ? (
+            <WorstFits photos={photos} />
+          ) : profile === "Reset Password" ? (
+            <ResetPassword />
+          ) : profile === "Edit Profile" ? (
+            <EditProfile loggedUser={loggedUser} />
+          ) : (
+            <UserProfLanding
+              myPics={myPics}
+              loggedUser={loggedUser}
+              photos={photos}
+            />
+          )}
         </Box>
-      </Drawer>
-      {profile === "Myfits" ? (
-        <UserProfLanding
-          myPics={myPics}
-          loggedUser={loggedUser}
-          photos={photos}
-        />
-      ) : profile === "addafit" ? (
-        <AddAFit setProfile={setProfile} loggedUser={loggedUser} />
-      ) : profile === "bestFits" ? (
-        <ProfileBestFit photos={photos} />
-      ) : profile === "worstFits" ? (
-        <WorstFits photos={photos} />
-      ) : profile === "Reset Password" ? (
-        <ResetPassword />
-      ) : profile === "Edit Profile" ? (
-        <EditProfile loggedUser={loggedUser} />
-      ) : (
-        <UserProfLanding
-          myPics={myPics}
-          loggedUser={loggedUser}
-          photos={photos}
-        />
-      )}
-    </Box>
+      </ThemeProvider>
+    </>
   );
 }

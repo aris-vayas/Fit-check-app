@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
-import { FormGroup } from "@mui/material";
+import { FormGroup, Toolbar } from "@mui/material";
 import { Card, Grid } from "@mui/material";
 import NewUserForm from "./NewUserForm";
 import { useNavigate } from "react-router-dom";
@@ -32,60 +32,75 @@ const Login = ({
   setPhotos,
   curUser,
   setCurUser,
+  setCount,
 }) => {
   const classes = useStyles();
   // create state variables for each input
 
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+  const [token, setToken] = useState("");
+  const [password, setPassword] = useState("");
   const nav = useNavigate();
 
   function onSubmit(e) {
     e.preventDefault();
     const user = {
-      username: username,
-      email: email,
+      token: token,
+      password: password,
     };
 
-    fetch(`/password/forgot`, {
+    fetch(`/password/reset`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),
-    })
-      .then((res) => res.json())
-      .then((user) => {
-        console.log(user);
-      });
-
-    setUsername("");
-    setEmail();
-
-    nav("/tokenpage");
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((user) => {
+          console.log("landing", user);
+          setPhotos(user.photos);
+        });
+        setToken("");
+        setPassword("");
+      } else {
+        res.json().then((json) => console.log(json.errors));
+      }
+      nav("/landing");
+    });
   }
 
   return (
     <form className={classes.root} onSubmit={onSubmit}>
       <Grid item>
+        {/* <Toolbar>
+          <Typography></Typography>
+        </Toolbar> */}
         <Card>
           <TextField
-            label="username"
+            label="newpassword"
             variant="filled"
-            type="username"
+            type="password"
             required
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <TextField
-            label="Email"
+            label="token"
             variant="filled"
-            type="email"
+            type="token"
             required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={token}
+            onChange={(e) => setToken(e.target.value)}
           />
-          <div justifyContent="center">
+          <div>
             <Button type="submit" variant="contained" color="primary">
-              Send Email Reset
+              resetPassword
+            </Button>
+            <Button
+              component={Link}
+              to="/PasswordReset"
+              variant="contained"
+              color="primary"
+            >
+              Resend Token
             </Button>
           </div>
         </Card>

@@ -16,13 +16,16 @@ class User < ApplicationRecord
        end
        
        def reset_password!(password)
+        
         self.reset_password_token = nil
-        self.password = password
-        save!
+        self.update!(password: password)
+    
        end
        
        private
-       
+       def password_params
+            params.permit(:password)
+       end
        def generate_token
         SecureRandom.hex(10)
        end
