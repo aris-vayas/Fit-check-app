@@ -11,7 +11,7 @@
 
 puts "seeding users..."
 
-User.create(full_name: 'third user', email: 'arisv428@gmail.com', password: 'secret', username: 'arisv428@gmail.com')
+User.create(full_name: 'Aris Vayas', email: 'arisv428@gmail.com', password: 'secret', username: 'arisv428@gmail.com')
 
 puts "seeing photos"
 

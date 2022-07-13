@@ -8,6 +8,11 @@ import { Card, Grid } from "@mui/material";
 import NewUserForm from "./NewUserForm";
 import { useNavigate } from "react-router-dom";
 import { OutlinedFlagOutlined } from "@material-ui/icons";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -36,9 +41,10 @@ const Login = ({
 }) => {
   const classes = useStyles();
   // create state variables for each input
-
+  const [open, setOpen] = React.useState(false);
   const [token, setToken] = useState("");
   const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState("");
   const nav = useNavigate();
 
   function onSubmit(e) {
@@ -60,52 +66,79 @@ const Login = ({
         });
         setToken("");
         setPassword("");
+        nav("/login");
       } else {
-        res.json().then((json) => console.log(json.errors));
+        res.json().then((json) => setErrors(json.errors));
+        setOpen(true);
       }
-      nav("/landing");
     });
   }
-
+  const handleClose = () => {
+    setToken("");
+    setPassword("");
+    setOpen(false);
+  };
   return (
-    <form className={classes.root} onSubmit={onSubmit}>
-      <Grid item>
-        {/* <Toolbar>
+    <>
+      <form className={classes.root} onSubmit={onSubmit}>
+        <Grid item>
+          {/* <Toolbar>
           <Typography></Typography>
         </Toolbar> */}
-        <Card>
-          <TextField
-            label="newpassword"
-            variant="filled"
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <TextField
-            label="token"
-            variant="filled"
-            type="token"
-            required
-            value={token}
-            onChange={(e) => setToken(e.target.value)}
-          />
-          <div>
-            <Button type="submit" variant="contained" color="primary">
-              resetPassword
+          <Card>
+            <TextField
+              label="newpassword"
+              variant="filled"
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <TextField
+              label="token"
+              variant="filled"
+              type="token"
+              required
+              value={token}
+              onChange={(e) => setToken(e.target.value)}
+            />
+            <div>
+              <Button type="submit" variant="contained" color="primary">
+                resetPassword
+              </Button>
+              <Button
+                component={Link}
+                to="/PasswordReset"
+                variant="contained"
+                color="primary"
+              >
+                Resend Token
+              </Button>
+            </div>
+          </Card>
+        </Grid>
+      </form>
+      <div>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Login Failed"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {errors}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button variant="contained" color="primary" onClick={handleClose}>
+              Try again
             </Button>
-            <Button
-              component={Link}
-              to="/PasswordReset"
-              variant="contained"
-              color="primary"
-            >
-              Resend Token
-            </Button>
-          </div>
-        </Card>
-      </Grid>
-    </form>
+          </DialogActions>
+        </Dialog>
+      </div>
+    </>
   );
 };
 

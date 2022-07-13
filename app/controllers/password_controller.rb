@@ -33,7 +33,7 @@ class PasswordController < ApplicationController
           
           if user.reset_password!( update_params)
             user.reset_password_token = nil
-            render json: {status: 'ok'}, status: :ok
+            render json: user,  status: :ok
           else
             render json: {error: user.errors.full_messages}, status: :unprocessable_entity
           end

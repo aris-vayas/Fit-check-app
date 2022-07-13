@@ -5,6 +5,12 @@ import Button from "@mui/material/Button";
 import { Toolbar, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import Login from "./Login";
+import { OutlinedFlagOutlined } from "@material-ui/icons";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -23,7 +29,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const NewUserForm = ({ handleClose, setIsAuthenticated, setCurUser }) => {
+const NewUserForm = ({ setIsAuthenticated, setCurUser }) => {
+  const [open, setOpen] = React.useState(false);
+  const [errors, setErrors] = useState("");
   const classes = useStyles();
   const nav = useNavigate();
   // create state variables for each input
@@ -31,6 +39,7 @@ const NewUserForm = ({ handleClose, setIsAuthenticated, setCurUser }) => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -50,24 +59,30 @@ const NewUserForm = ({ handleClose, setIsAuthenticated, setCurUser }) => {
         res.json().then((user) => {
           setCurUser(user);
           setIsAuthenticated(true);
+          nav("/landing");
         });
       } else {
-        res.json().then((json) => console.log(json.errors));
+        res.json().then((json) => setError(json.errors));
+        setOpen(true);
       }
     });
     setEmail("");
     setLastName("");
     setFirstName("");
     setPassword("");
-
-    nav("/landing");
   }
   function handleForgotPassword() {
     fetch(`/welcome_email`)
       .then((r) => r.json())
       .then((data) => console.log(data));
   }
-
+  const handleClose = () => {
+    setEmail("");
+    setLastName("");
+    setFirstName("");
+    setPassword("");
+    setOpen(false);
+  };
   return (
     <>
       <Toolbar justifyContent="center"></Toolbar>
@@ -116,6 +131,26 @@ const NewUserForm = ({ handleClose, setIsAuthenticated, setCurUser }) => {
           Signup
         </Button>
       </form>
+      <div>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">{"Login Failed"}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {error}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button variant="contained" color="primary" onClick={handleClose}>
+              Try again
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </>
   );
 };

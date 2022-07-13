@@ -67,17 +67,24 @@ export default function ClippedDrawer({ images, loggedUser, photos, theme }) {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Box sx={{ display: "flex" }}>
+        <Box sx={{ md: "flex", xs: "none" }}>
           <Drawer
             PaperProps={{
-              style: { height: "45vh", marginTop: 160, elevation: 4 },
+              style: {
+                height: "45vh",
+                marginTop: 160,
+                elevation: 4,
+                display: "flex",
+              },
             }}
             variant="permanent"
             sx={{
+              xs: "none",
+              md: "flex",
               fontFamily: "monospace",
               color: "primary",
               width: drawerWidth,
-              flexShrink: 0,
+              flexShrink: "flex",
               [`& .MuiDrawer-paper`]: {
                 width: drawerWidth,
                 boxSizing: "border-box",
@@ -94,7 +101,13 @@ export default function ClippedDrawer({ images, loggedUser, photos, theme }) {
                     <ListItemIcon>
                       <VerticalAlignTopIcon />
                     </ListItemIcon>
-                    <ListItemText fontFamily="monospace" primary={"BestFits"} />
+                    <ListItemText
+                      primaryTypographyProps={{
+                        fontSize: "30px",
+                        fontFamily: "monospace",
+                      }}
+                      primary={"BestFits"}
+                    />
                   </ListItemButton>
                 </ListItem>
                 <ListItem key={1} disablePadding>
@@ -102,7 +115,13 @@ export default function ClippedDrawer({ images, loggedUser, photos, theme }) {
                     <ListItemIcon>
                       <StarIcon />
                     </ListItemIcon>
-                    <ListItemText primary={"Myfits"} />
+                    <ListItemText
+                      primaryTypographyProps={{
+                        fontSize: "30px",
+                        fontFamily: "monospace",
+                      }}
+                      primary={"Myfits"}
+                    />
                   </ListItemButton>
                 </ListItem>
                 <ListItem key={2} disablePadding>
@@ -110,7 +129,13 @@ export default function ClippedDrawer({ images, loggedUser, photos, theme }) {
                     <ListItemIcon>
                       <VerticalAlignBottomIcon />
                     </ListItemIcon>
-                    <ListItemText primary={"WorstFits"} />
+                    <ListItemText
+                      primaryTypographyProps={{
+                        fontSize: "30px",
+                        fontFamily: "monospace",
+                      }}
+                      primary={"WorstFits"}
+                    />
                   </ListItemButton>
                 </ListItem>
                 <ListItem key={3} disablePadding>
@@ -118,7 +143,13 @@ export default function ClippedDrawer({ images, loggedUser, photos, theme }) {
                     <ListItemIcon>
                       <AddIcon />
                     </ListItemIcon>
-                    <ListItemText primary={"Add a fit"} />
+                    <ListItemText
+                      primaryTypographyProps={{
+                        fontSize: "30px",
+                        fontFamily: "monospace",
+                      }}
+                      primary={"AddFit"}
+                    />
                   </ListItemButton>
                 </ListItem>
               </List>
@@ -129,7 +160,13 @@ export default function ClippedDrawer({ images, loggedUser, photos, theme }) {
                     <ListItemIcon>
                       <EditIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Reset Password" />
+                    <ListItemText
+                      primaryTypographyProps={{
+                        fontSize: "30px",
+                        fontFamily: "monospace",
+                      }}
+                      primary="Reset Password"
+                    />
                   </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
@@ -137,7 +174,13 @@ export default function ClippedDrawer({ images, loggedUser, photos, theme }) {
                     <ListItemIcon>
                       <EditIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Edit Profile" />
+                    <ListItemText
+                      primaryTypographyProps={{
+                        fontSize: "30px",
+                        fontFamily: "monospace",
+                      }}
+                      primary="Edit Profile"
+                    />
                   </ListItemButton>
                 </ListItem>
               </List>
