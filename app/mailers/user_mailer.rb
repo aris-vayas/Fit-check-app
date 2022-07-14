@@ -8,9 +8,8 @@ class UserMailer < ApplicationMailer
   end
 
   def forgot_password(user)
-
-
-    @url= " https://fitcheckapp.herokuapp.com/tokenpage"
+    @token= user.reset_password_token
+    
     @user= user 
     mail(to: @user.email, subject: 'Forgot Password')
 end

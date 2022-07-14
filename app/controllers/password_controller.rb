@@ -22,13 +22,13 @@ class PasswordController < ApplicationController
       def reset
       
         token = params[:token].to_s
-    
+   
         if params[:token].blank?
           return render json: {error: 'Token not present'}
         end
     
         user = User.find_by(reset_password_token: token)
-    
+   
         if user.present? && user.password_token_valid?
           if user.reset_password!( params[:password])
             user.reset_password_token = nil

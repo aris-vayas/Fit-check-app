@@ -84,7 +84,7 @@ function App() {
         </div>
         <Routes>
           <Route path="/" element={<Navigate replace to="/Landing" />} />
-          <Route path="/tokenpage" element={<TokenPage />}></Route>
+          <Route path="/password/reset" element={<TokenPage />}></Route>
           <Route
             path="/Landing"
             element={

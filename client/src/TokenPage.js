@@ -13,6 +13,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useSearchParams } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -40,18 +41,21 @@ const Login = ({
   setCount,
 }) => {
   const classes = useStyles();
-  // create state variables for each input
+
+  let [searchParams, setSearchParams] = useSearchParams();
+
+  console.log(searchParams.get("token"));
+
   const [open, setOpen] = React.useState(false);
   const [token, setToken] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState("");
   const nav = useNavigate();
-
   function onSubmit(e) {
     e.preventDefault();
     const user = {
-      token: token,
       password: password,
+      token: searchParams.get("token"),
     };
 
     fetch(`/password/reset`, {
@@ -94,14 +98,7 @@ const Login = ({
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <TextField
-              label="token"
-              variant="filled"
-              type="token"
-              required
-              value={token}
-              onChange={(e) => setToken(e.target.value)}
-            />
+
             <div>
               <Button type="submit" variant="contained" color="primary">
                 resetPassword
