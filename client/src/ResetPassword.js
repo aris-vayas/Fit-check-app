@@ -60,7 +60,7 @@ const Login = ({
     }).then((res) => {
       if (res.ok) {
         res.json().then((r) => setErrors(r));
-        nav("/landing");
+        nav("/password/reset");
       } else {
         res.json().then((json) => setErrors(json.errors));
         setOpen(true);
