@@ -79,8 +79,6 @@ export default function ClippedDrawer({ images, loggedUser, photos, theme }) {
             }}
             variant="permanent"
             sx={{
-              xs: "none",
-              md: "flex",
               fontFamily: "monospace",
               color: "primary",
               width: drawerWidth,

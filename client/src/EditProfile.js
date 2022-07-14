@@ -70,7 +70,7 @@ const EditProfile = ({ loggedUser }) => {
         <Grid item>
           <form className={classes.root} onSubmit={handleSubmit}>
             <TextField
-              label="Reeneter password"
+              label="Re eneter password"
               variant="filled"
               required
               value={password}
