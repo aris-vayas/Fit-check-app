@@ -168,7 +168,7 @@ export default function ClippedDrawer({ images, loggedUser, photos, theme }) {
                   </ListItemButton>
                 </ListItem>
                 <ListItem disablePadding>
-                  <ListItemButton onClick={() => setProfile(`Edit Profile`)}>
+                  <ListItemButton onClick={() => setProfile("Edit Profile")}>
                     <ListItemIcon>
                       <EditIcon />
                     </ListItemIcon>

@@ -1,10 +1,10 @@
-import React, { cloneElement, useState } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { Grid, Toolbar, Typography } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import Login from "./Login";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -57,11 +57,6 @@ const EditProfile = ({ loggedUser }) => {
 
     nav("/profile");
   }
-  //   function handleForgotPassword() {
-  //     fetch(`/welcome_email`)
-  //       .then((r) => r.json())
-  //       .then((data) => console.log(data));
-  //   }
 
   return (
     <>
@@ -85,7 +80,7 @@ const EditProfile = ({ loggedUser }) => {
               onChange={(e) => setEmail(e.target.value)}
             />
             <Button component={Link} to="/PasswordReset">
-              ForgotPawssword?
+              Forgot Password?
             </Button>
             <Button type="submit" variant="contained" color="primary">
               Update info

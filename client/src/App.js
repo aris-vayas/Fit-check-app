@@ -8,8 +8,7 @@ import TopFits from "./TopFits";
 import NewUserForm from "./NewUserForm";
 import About from "./About";
 import UserProfile from "./UserProfile";
-import Grid from "@mui/material/Grid";
-import { Paper } from "@mui/material";
+
 import Logout from "./Logout";
 import Login from "./Login";
 import ResetPassword from "./ResetPassword";

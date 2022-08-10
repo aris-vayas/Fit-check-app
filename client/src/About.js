@@ -229,34 +229,39 @@ export default function FixedColumns() {
             <Typography variant="h5" fontFamily="monospace">
               The whole internet is Hot or Not.com So the inspiration for this
               site came from the joke I told myself every phase along the way,
-              every time I leaned more about the INTERNT. “ oh, so everything is
-              hot or not?”. And while I treated this aas a joke for the first
-              phases, after learning rails and how DB associations work, I
-              really was on to the idea that hot or not really buillt the
-              framework for the internet we use today. SO, AFTER DECIDING TO
-              MAKE THIS MY final project I researched HOT OR NOT in more detail
-              and found some interesting perspectives I feel are relevant for
-              this scope. Basically, YOUTUBE, TINDER, TWITTER, FACEBOOK, WERE
-              ALL BORN FROM hot or not. Baaically the idea of social media in
-              general was catapulted from HOT OR NOT. No MySpace, no instagram.
+              every time I leaned more about the client server relationship. “
+              oh, so everything is hot or not?”. And while I treated this as a
+              joke for the first phases, after learning rails and how DB
+              associations work, I really was on to the idea that hot or not
+              really built the framework for the internet we use today. SO,
+              AFTER DECIDING TO MAKE THIS MY final project I researched HOT OR
+              NOT in more detail and found some interesting perspectives I feel
+              are relevant for this scope. Basically, YOUTUBE, TINDER, TWITTER,
+              FACEBOOK, WERE ALL BORN FROM hot or not. The idea of social media
+              in general was catapulted from HOT OR NOT. Prior to this user
+              interaction was one way. From the internet to the viewer. Hot or
+              not permitter a two way interaction which was the first example of
+              social media we know today. No MySpace, no instagram. No twitter.
               Nothing except the boring internet where you went and looked at
               stuff. The Social Network jump. So the biggest thing that made hot
-              or not famous was the fact that mark zuckerbuerg who built a ton
-              of projects while in college, used the idea to start hi Harvard
+              or not famous was the fact that mark zuckerberg, who built a ton
+              of projects while in college, used the idea to start his Harvard
               picture voting platform that then spun off into Facebook. It is
-              interesting to note that many of the social media pitfalls
+              interesting to note that many of the BIG social media pitfalls
               (comments and unsolicited feedback) were avoided during hot or
-              nots creation. It was here wheee there was a pure form of the
-              internet still, expcpet people could now log on to interact with
+              nots creation. It was here where there was a pure form of the
+              internet still, except people could now log on to interact with
               other humans in a way that was never before used. More notably as
               well they came fro the asked of the 2000 dot com bubble pop where
               billions (in 2000 dollars) were wiped out from the industry, not
-              much unlike today. It was the r bare bones and highly delevelpped
-              method of user bias that was conciouous of social media effect as
-              well as the pecieved sexism and judgment the site was based on.
-              However by making user experience and fun their foremost goal,
-              they were able to avoid the terribleness that human and bot trolls
-              can inflci on the network
+              much unlike today. Hotornot actually thrived with bare bones hard
+              work and resourcefulness as we ll as a corporate structure built
+              with values at its forefront. It was the bare bones and highly
+              delevelpped method of user bias that was conciouous of social
+              media effect as - [ ] well as the pecieved sexism and judgment the
+              site was based on. However by making user experience and fun their
+              foremost goal, they were able to avoid the terribleness that human
+              and bot trolls can inflci on the network
             </Typography>
           </CardContent>
         </Card>
